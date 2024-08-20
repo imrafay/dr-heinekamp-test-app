@@ -1,40 +1,56 @@
 import React, { useState } from 'react';
-import { uploadDocument } from '../external/DocumentApi';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';  // Make sure to import Toastify CSS
+import { uploadMultipleDocumentsAPI } from '../external/DocumentApi'; // Ensure this function is correctly updated
 
 const UploadDocument = ({ onUploadSuccess }) => {
-    const [file, setFile] = useState(null);
+    const [files, setFiles] = useState([]);
 
     const onFileChange = event => {
-        setFile(event.target.files[0]);
+        setFiles(event.target.files);
     };
 
-    const onUpload = () => {
-        if (file) {
-            uploadDocument(file)
-                .then(() => {
-                    toast.success('File uploaded successfully!');
-                    onUploadSuccess();
-                })
-                .catch(error => toast.error('Error uploading file:', error));
+    const onUpload = async () => {
+        if (files.length > 0) {
+            const formData = new FormData();
+            for (const file of files) {
+                formData.append('files', file);
+            }
+
+            try {
+                await uploadMultipleDocumentsAPI(formData);
+                toast.success('Files uploaded successfully!');
+                onUploadSuccess(); // Notify parent component to refresh document list
+                setFiles([]); // Clear files after successful upload
+            } catch (error) {
+                toast.error('Error uploading files:', error);
+            }
         } else {
-            toast.warn('Please select a file to upload.');
+            toast.warn('Please select files to upload.');
         }
     };
 
     return (
-        <div className="flex flex-col items-center justify-center bg-gray-100 p-4">
-            <h1 className="text-3xl font-bold mb-6 text-gray-800">Upload Document</h1>
-            <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-                <input
-                    type="file"
-                    onChange={onFileChange}
-                    className="mb-4 w-full text-gray-700 border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
+        <div className="container mx-auto px-4 py-8">
+            <h1 className="text-2xl font-bold mb-6">Upload Documents</h1>
+            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                <div className="flex flex-col items-center">
+                    <label htmlFor="fileInput" className="cursor-pointer w-full bg-blue-500 text-white font-semibold py-2 px-4 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 text-center">
+                        Select Files
+                    </label>
+                    <input
+                        id="fileInput"
+                        type="file"
+                        multiple
+                        onChange={onFileChange}
+                        className="hidden"
+                    />
+                    <p className="mt-2 text-gray-600">
+                        {files.length > 0 ? `${files.length} file${files.length > 1 ? 's' : ''} selected` : 'No files selected'}
+                    </p>
+                </div>
                 <button
                     onClick={onUpload}
-                    className="w-full bg-blue-500 text-white font-semibold py-2 px-4 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="mt-4 w-full bg-green-500 text-white font-semibold py-2 px-4 rounded-md shadow hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
                 >
                     Upload
                 </button>

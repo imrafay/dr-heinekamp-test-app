@@ -18,7 +18,7 @@ export const getDocuments = async () => {
     }
 };
 
-// Function to upload a document
+
 export const uploadDocument = async (file) => {
     const formData = new FormData();
     formData.append('file', file);
@@ -34,6 +34,21 @@ export const uploadDocument = async (file) => {
         throw error;
     }
 };
+
+export const uploadMultipleDocumentsAPI = async (formData) => {
+    try {
+        const response = await axios.post(`${API_BASE_URL}/upload-multiple`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error uploading documents:', error);
+        throw error;
+    }
+};
+
 
 export const downloadMultipleDocumentsAPI = async (documentIds) => {
     try {
