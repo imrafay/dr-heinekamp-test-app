@@ -35,7 +35,19 @@ export const uploadDocument = async (file) => {
     }
 };
 
-// Function to download a document
+export const downloadMultipleDocumentsAPI = async (documentIds) => {
+    try {
+        const response = await axios.post(`${API_BASE_URL}/download-multiple`, documentIds, {
+            responseType: 'blob',
+        });
+
+        return response;
+    } catch (error) {
+        console.error('Error downloading documents:', error);
+        throw error;
+    }
+};
+
 export const downloadDocumentAPI = async (documentId) => {
     try {
         const response = await axios.get(`${API_BASE_URL}/download/${documentId}`, {
