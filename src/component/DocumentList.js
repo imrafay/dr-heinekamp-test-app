@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import FileIcon from './FileIcon';
 import UploadDocument from './UploadDocument';
 import DownloadDocument, { downloadMultipleDocuments } from './DownloadDocument';
+import DeleteDocument from './DeleteDocument';
 
 const DocumentList = () => {
     const [documents, setDocuments] = useState([]);
@@ -24,7 +25,7 @@ const DocumentList = () => {
         }
     };
 
-    const handleUploadSuccess = () => {
+    const handleActionSuccess = () => {
         fetchDocuments(); // Refresh document list after a successful upload
         toast.success('Document list updated!');
     };
@@ -55,25 +56,28 @@ const DocumentList = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {documents.map((doc) => (
                 <div key={doc.name} className="bg-white rounded-lg shadow-md p-4 flex flex-col items-start">
-                    <FileIcon filename={doc.iconUrl} />
-                    <a
-                        href={doc.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-lg font-semibold text-blue-600 hover:underline"
-                    >
-                        {doc.name}
-                    </a>
-                    <p className="text-gray-600 mt-2">Uploaded on: {new Date(doc.uploadDate).toLocaleDateString()}</p>
-
+                    <FileIcon filename={doc.fileType} />
                     <input
                         type="checkbox"
                         className="mt-4"
                         checked={selectedDocuments.includes(doc.name)}
                         onChange={() => handleSelectDocument(doc.name)}
                     />
-
+                    <a
+                        href={doc.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-lg font-semibold text-blue-600 hover:underline"
+                    >
+                        <img
+                            src={doc.previewUrl}
+                            alt={`Preview of ${doc.name}`}
+                            className="w-full h-auto rounded-md border border-gray-300"
+                        />
+                    </a>
+                    <p className="text-gray-600 mt-2">Uploaded on: {new Date(doc.uploadDate).toLocaleDateString()}</p>
                     <DownloadDocument documentId={doc.name} />
+                    <DeleteDocument documentName={doc.name} onDeleteSuccess={handleActionSuccess} />
                 </div>
             ))}
         </div>
@@ -81,7 +85,7 @@ const DocumentList = () => {
 
     return (
         <div className="container mx-auto px-4 py-8">
-            <UploadDocument onUploadSuccess={handleUploadSuccess} />
+            <UploadDocument onUploadSuccess={handleActionSuccess} />
             <h1 className="text-2xl font-bold mb-4 mt-8">Documents</h1>
             <h1 className="text-xl mb-4">Total Count: {documentCount}</h1>
 

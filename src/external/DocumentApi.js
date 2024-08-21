@@ -88,3 +88,13 @@ export const shareDocument = async (documentId, expiresIn) => {
         throw error;
     }
 };
+
+export const deleteDocumentAPI = async (fileName) => {
+    try {
+        const response = await axios.delete(`${API_BASE_URL}/delete/${encodeURIComponent(fileName)}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error deleting document:', error);
+        throw error;
+    }
+};
