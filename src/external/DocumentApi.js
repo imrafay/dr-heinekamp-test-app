@@ -75,19 +75,6 @@ export const downloadDocumentAPI = async (documentId) => {
     }
 };
 
-// Function to share a document and get a pre-signed URL
-export const shareDocument = async (documentId, expiresIn) => {
-    try {
-        const response = await axios.post(`${API_BASE_URL}/share`, {
-            documentId,
-            expiresIn,
-        });
-        return response.data;
-    } catch (error) {
-        console.error('Error sharing document:', error);
-        throw error;
-    }
-};
 
 export const deleteDocumentAPI = async (fileName) => {
     try {
