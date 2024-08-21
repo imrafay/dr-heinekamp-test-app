@@ -1,5 +1,5 @@
 import React from 'react';
-import { deleteDocumentAPI } from '../external/DocumentApi';
+import { deleteDocumentAPI } from '../../external/DocumentApi';
 import { toast } from 'react-toastify';
 
 const DeleteDocument = ({ documentName, onDeleteSuccess }) => {

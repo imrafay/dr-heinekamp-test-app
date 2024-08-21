@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import { uploadMultipleDocumentsAPI } from '../external/DocumentApi';
-import { generatePreview } from './GeneratePreview';
+import { uploadMultipleDocumentsAPI } from '../../external/DocumentApi';
+import { generatePreview } from '../DocumentUtils/GeneratePreview';
 
 function getFileNameWithoutExtension(filename) {
     const dotIndex = filename.lastIndexOf('.');

@@ -1,7 +1,7 @@
 import React from 'react';
-import FileIcon from './FileIcon';
-import DownloadDocument from './DownloadDocument';
-import DeleteDocument from './DeleteDocument';
+import FileIcon from '../DocumentUtils/FileIcon';
+import DownloadDocument from '../DocumentActions/DownloadDocument';
+import DeleteDocument from '../DocumentActions/DeleteDocument';
 
 const DocumentItem = ({ doc, isSelected, onSelect, onActionSuccess }) => {
     return (

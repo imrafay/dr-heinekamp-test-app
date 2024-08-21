@@ -1,5 +1,5 @@
 import React from 'react';
-import { downloadDocumentAPI, downloadMultipleDocumentsAPI } from '../external/DocumentApi';
+import { downloadDocumentAPI, downloadMultipleDocumentsAPI } from '../../external/DocumentApi';
 import { toast } from 'react-toastify';
 
 export const downloadMultipleDocuments = async (documentIds) => {

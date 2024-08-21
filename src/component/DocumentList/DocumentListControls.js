@@ -1,5 +1,5 @@
 import React from 'react';
-import UploadDocument from './UploadDocument';
+import UploadDocument from '../DocumentActions/UploadDocument';
 
 const DocumentListControls = ({ onUploadSuccess, selectedDocuments, onDownloadSelected }) => {
     return (

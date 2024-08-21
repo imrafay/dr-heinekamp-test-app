@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { shareDocument } from '../external/DocumentApi';
+import { shareDocument } from '../../external/DocumentApi';
 import { toast } from 'react-toastify';
 
 const ShareDocument = () => {
