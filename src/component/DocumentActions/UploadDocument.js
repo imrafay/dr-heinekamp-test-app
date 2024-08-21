@@ -5,10 +5,7 @@ import { generatePreview } from '../DocumentUtils/GeneratePreview';
 
 function getFileNameWithoutExtension(filename) {
     const dotIndex = filename.lastIndexOf('.');
-    if (dotIndex === -1) {
-        return filename;
-    }
-    return filename.substring(0, dotIndex);
+    return dotIndex === -1 ? filename : filename.substring(0, dotIndex);
 }
 
 const UploadDocument = ({ onUploadSuccess }) => {
@@ -40,7 +37,6 @@ const UploadDocument = ({ onUploadSuccess }) => {
 
             files.forEach((file, index) => {
                 formData.append('files', file);
-
                 if (previews[index]) {
                     formData.append('previews', previews[index].preview);
                 }
@@ -62,10 +58,10 @@ const UploadDocument = ({ onUploadSuccess }) => {
 
     return (
         <div className="container mx-auto px-4 py-8">
-            <h1 className="text-2xl font-bold mb-6">Upload Documents</h1>
-            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+            <h1 className="text-3xl font-bold mb-6 text-gray-800">Upload Documents</h1>
+            <div className="bg-white p-8 rounded-lg shadow-lg border border-gray-200">
                 <div className="flex flex-col items-center">
-                    <label htmlFor="fileInput" className="cursor-pointer w-full bg-blue-500 text-white font-semibold py-2 px-4 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 text-center">
+                    <label htmlFor="fileInput" className="cursor-pointer bg-blue-500 text-white font-semibold py-3 px-6 rounded-lg shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 text-center transition ease-in-out duration-200">
                         Select Files
                     </label>
                     <input
@@ -75,27 +71,27 @@ const UploadDocument = ({ onUploadSuccess }) => {
                         onChange={onFileChange}
                         className="hidden"
                     />
-                    <p className="mt-2 text-gray-600">
+                    <p className="mt-3 text-gray-600">
                         {files.length > 0 ? `${files.length} file${files.length > 1 ? 's' : ''} selected` : 'No files selected'}
                     </p>
                 </div>
 
-                <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                     {previews.map((preview, index) => (
-                        <div key={index} className="relative">
+                        <div key={index} className="relative bg-gray-100 rounded-lg overflow-hidden">
                             <img
                                 src={URL.createObjectURL(preview.preview)}
                                 alt={`Preview of ${files[index].name}`}
-                                className="w-full h-auto rounded-md border border-gray-300"
+                                className="w-full h-auto object-cover"
                             />
-                            <p className="mt-2 text-sm text-center text-gray-600">{files[index].name}</p>
+                            <p className="mt-2 text-sm text-center text-gray-700 truncate">{files[index].name}</p>
                         </div>
                     ))}
                 </div>
 
                 <button
                     onClick={onUpload}
-                    className="mt-4 w-full bg-green-500 text-white font-semibold py-2 px-4 rounded-md shadow hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
+                    className="mt-6 w-full bg-green-500 text-white font-semibold py-3 px-6 rounded-lg shadow hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 transition ease-in-out duration-200"
                 >
                     Upload
                 </button>
