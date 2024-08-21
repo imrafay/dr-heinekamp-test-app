@@ -7,7 +7,7 @@ const DeleteDocument = ({ documentName, onDeleteSuccess }) => {
         try {
             await deleteDocumentAPI(documentName);
             toast.success('Document deleted successfully!');
-            onDeleteSuccess(); // Refresh document list after deletion
+            onDeleteSuccess();
         } catch (error) {
             toast.error('Error deleting document:', error);
         }

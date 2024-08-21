@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import { uploadMultipleDocumentsAPI } from '../external/DocumentApi'; // Ensure this function is correctly updated
-import { generatePreview } from './GeneratePreview'; // Ensure generatePreview function is defined properly
+import { uploadMultipleDocumentsAPI } from '../external/DocumentApi';
+import { generatePreview } from './GeneratePreview';
 
 function getFileNameWithoutExtension(filename) {
     const dotIndex = filename.lastIndexOf('.');
@@ -11,7 +11,6 @@ function getFileNameWithoutExtension(filename) {
     return filename.substring(0, dotIndex);
 }
 
-
 const UploadDocument = ({ onUploadSuccess }) => {
     const [files, setFiles] = useState([]);
     const [previews, setPreviews] = useState([]);
@@ -19,7 +18,6 @@ const UploadDocument = ({ onUploadSuccess }) => {
     const onFileChange = async (event) => {
         const selectedFiles = Array.from(event.target.files);
 
-        // Generate previews for all selected files
         const previewPromises = selectedFiles.map(async (file) => {
             const preview = await generatePreview(file);
             return {
@@ -41,10 +39,8 @@ const UploadDocument = ({ onUploadSuccess }) => {
             const formData = new FormData();
 
             files.forEach((file, index) => {
-                // Append the original file
                 formData.append('files', file);
 
-                // Append the preview file
                 if (previews[index]) {
                     formData.append('previews', previews[index].preview);
                 }
@@ -53,8 +49,8 @@ const UploadDocument = ({ onUploadSuccess }) => {
             try {
                 await uploadMultipleDocumentsAPI(formData);
                 toast.success('Files uploaded successfully!');
-                onUploadSuccess(); // Notify parent component to refresh the document list
-                setFiles([]); // Clear files after successful upload
+                onUploadSuccess();
+                setFiles([]);
                 setPreviews([]);
             } catch (error) {
                 toast.error('Error uploading files:', error);
@@ -84,7 +80,6 @@ const UploadDocument = ({ onUploadSuccess }) => {
                     </p>
                 </div>
 
-                {/* Display preview images */}
                 <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                     {previews.map((preview, index) => (
                         <div key={index} className="relative">

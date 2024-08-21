@@ -2,18 +2,6 @@ import mammoth from 'mammoth';
 import { read, utils } from 'xlsx';
 import * as pdfjsLib from 'pdfjs-dist/webpack';
 
-const base64ToBlob = (base64, mimeType) => {
-    const byteCharacters = atob(base64.split(',')[1]);
-    const byteNumbers = new Array(byteCharacters.length);
-
-    for (let i = 0; i < byteCharacters.length; i++) {
-        byteNumbers[i] = byteCharacters.charCodeAt(i);
-    }
-
-    const byteArray = new Uint8Array(byteNumbers);
-    return new Blob([byteArray], { type: mimeType });
-};
-
 export const generatePreview = async (file) => {
     const fileType = file.type;
     let previewBase64;
@@ -30,6 +18,19 @@ export const generatePreview = async (file) => {
     const mimeType = previewBase64.split(',')[0].match(/:(.*?);/)[1];
     return base64ToBlob(previewBase64, mimeType);
 };
+
+const base64ToBlob = (base64, mimeType) => {
+    const byteCharacters = atob(base64.split(',')[1]);
+    const byteNumbers = new Array(byteCharacters.length);
+
+    for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+
+    const byteArray = new Uint8Array(byteNumbers);
+    return new Blob([byteArray], { type: mimeType });
+};
+
 
 const generatePdfPreview = async (file) => {
     const arrayBuffer = await file.arrayBuffer();
@@ -51,8 +52,6 @@ const generatePdfPreview = async (file) => {
     };
 
     await page.render(renderContext).promise;
-
-    // Return the image data URL (base64 encoded PNG)
     return canvas.toDataURL('image/png');
 };
 
