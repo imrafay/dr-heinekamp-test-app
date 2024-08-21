@@ -3,7 +3,7 @@ import { getDocuments } from '../../external/DocumentApi';
 import { toast } from 'react-toastify';
 import DocumentItem from './DocumentItem';
 import DocumentListControls from './DocumentListControls';
-import { downloadMultipleDocuments } from '../DocumentActions/DownloadDocument';
+import { downloadMultipleDocuments } from '../DownloadDocument';
 
 const DocumentList = () => {
     const [documents, setDocuments] = useState([]);

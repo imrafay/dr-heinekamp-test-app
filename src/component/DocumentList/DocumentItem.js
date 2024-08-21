@@ -4,6 +4,7 @@ import { faShareAlt } from '@fortawesome/free-solid-svg-icons';
 import FileIcon from '../DocumentUtils/FileIcon';
 import DownloadDocument from '../DocumentActions/DownloadDocument';
 import DeleteDocument from '../DocumentActions/DeleteDocument';
+import { toast } from 'react-toastify';
 
 const ONE_HOUR = 60 * 60 * 1000; // One hour in milliseconds
 
@@ -16,13 +17,11 @@ const DocumentItem = ({ doc, isSelected, onSelect, onActionSuccess }) => {
     const isWithinOneHour = (now - uploadTime) <= ONE_HOUR;
 
     const copyToClipboard = (url) => {
-        navigator.clipboard.writeText(url)
-            .then(() => {
-                alert('Link copied to clipboard!');
-            })
-            .catch((err) => {
-                alert('Failed to copy the link: ', err);
-            });
+        navigator.clipboard.writeText(url).then(() => {
+            toast.success('Link copied to clipboard!');
+        }).catch(err => {
+            toast.error('Failed to copy link:', err);
+        });
     };
 
     return (
@@ -54,17 +53,16 @@ const DocumentItem = ({ doc, isSelected, onSelect, onActionSuccess }) => {
             </div>
 
             <div className="flex space-x-2">
-                {isWithinOneHour && (
+                {isWithinOneHour ? (
                     <button
                         onClick={() => copyToClipboard(doc.tempUrl)}
-                        className="text-blue-500 hover:text-blue-700 focus:outline-none"
+                        className="icon-button text-blue-500 hover:bg-blue-100"
                     >
                         <FontAwesomeIcon icon={faShareAlt} size="lg" />
                     </button>
-                )}
-                {!isWithinOneHour && (
+                ) : (
                     <button
-                        className="text-gray-500 cursor-not-allowed"
+                        className="icon-button disabled"
                         disabled
                     >
                         <FontAwesomeIcon icon={faShareAlt} size="lg" />

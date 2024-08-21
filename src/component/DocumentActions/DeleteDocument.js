@@ -1,6 +1,9 @@
 import React from 'react';
 import { deleteDocumentAPI } from '../../external/DocumentApi';
 import { toast } from 'react-toastify';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+
 
 const DeleteDocument = ({ documentName, onDeleteSuccess }) => {
     const handleDelete = async () => {
@@ -16,9 +19,9 @@ const DeleteDocument = ({ documentName, onDeleteSuccess }) => {
     return (
         <button
             onClick={handleDelete}
-            className="mt-4 bg-red-500 text-white font-semibold py-2 px-4 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="icon-button text-red-500 hover:bg-red-100"
         >
-            Delete
+            <FontAwesomeIcon icon={faTrashAlt} size="lg" />
         </button>
     );
 };

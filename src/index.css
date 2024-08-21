@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.icon-button {
+    @apply w-10 h-10 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-300 transition ease-in-out duration-150 text-gray-700;
+}
+
+.icon-button:hover {
+    @apply bg-gray-300;
+}
+
+.icon-button.disabled {
+    @apply cursor-not-allowed text-gray-400 bg-gray-100;
+}

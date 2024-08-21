@@ -1,8 +1,6 @@
 import React from 'react';
-import { downloadDocumentAPI, downloadMultipleDocumentsAPI } from '../../external/DocumentApi';
+import { downloadDocumentAPI, downloadMultipleDocumentsAPI } from '../external/DocumentApi';
 import { toast } from 'react-toastify';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDownload } from '@fortawesome/free-solid-svg-icons';
 
 export const downloadMultipleDocuments = async (documentIds) => {
     try {
@@ -43,10 +41,8 @@ const DownloadDocument = ({ documentId }) => {
 
     return (
         <button
-            className="icon-button text-blue-500 hover:bg-blue-100"
-            onClick={onDownload}>
-            <FontAwesomeIcon icon={faDownload} size="lg" />
-        </button>
+            className="mt-4 bg-green-500 text-white font-semibold py-2 px-4 rounded-md shadow hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
+            onClick={onDownload}>Download</button>
     );
 };
 
