@@ -1,11 +1,10 @@
 import axios from 'axios';
 
-// Base URL for API requests (adjust if necessary)
-const API_BASE_URL = 'https://localhost:7045/api/Documents';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export const getDocuments = async () => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/list`, {
+        const response = await axios.get(`${API_BASE_URL}/documents/list`, {
             headers: {
                 'Accept': 'application/json'
             }
@@ -13,7 +12,7 @@ export const getDocuments = async () => {
         console.log(response.data);
         return response.data;
     } catch (error) {
-        console.error('Error fetching documents:', error);
+        console.error('Error:', error);
         throw error;
     }
 };
@@ -24,20 +23,20 @@ export const uploadDocument = async (file) => {
     formData.append('file', file);
 
     try {
-        await axios.post(`${API_BASE_URL}/upload`, formData, {
+        await axios.post(`${API_BASE_URL}/documents/upload`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
         });
     } catch (error) {
-        console.error('Error uploading document:', error);
+        console.error('Error', error);
         throw error;
     }
 };
 
 export const uploadMultipleDocumentsAPI = async (formData) => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/upload-multiple`, formData, {
+        const response = await axios.post(`${API_BASE_URL}/documents/upload-multiple`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -52,7 +51,7 @@ export const uploadMultipleDocumentsAPI = async (formData) => {
 
 export const downloadMultipleDocumentsAPI = async (documentIds) => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/download-multiple`, documentIds, {
+        const response = await axios.post(`${API_BASE_URL}/documents/download-multiple`, documentIds, {
             responseType: 'blob',
         });
 
@@ -65,7 +64,7 @@ export const downloadMultipleDocumentsAPI = async (documentIds) => {
 
 export const downloadDocumentAPI = async (documentId) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/download/${documentId}`, {
+        const response = await axios.get(`${API_BASE_URL}/documents/download/${documentId}`, {
             responseType: 'blob',
         });
         return response.data;
@@ -78,7 +77,7 @@ export const downloadDocumentAPI = async (documentId) => {
 
 export const deleteDocumentAPI = async (fileName) => {
     try {
-        const response = await axios.delete(`${API_BASE_URL}/delete/${encodeURIComponent(fileName)}`);
+        const response = await axios.delete(`${API_BASE_URL}/documents/delete/${encodeURIComponent(fileName)}`);
         return response.data;
     } catch (error) {
         console.error('Error deleting document:', error);

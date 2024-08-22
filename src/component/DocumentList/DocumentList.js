@@ -26,7 +26,6 @@ const DocumentList = () => {
 
     const handleActionSuccess = () => {
         fetchDocuments();
-        toast.success('Document list updated!');
     };
 
     const handleSelectDocument = (documentId) => {
